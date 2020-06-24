@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.movieapp.R
+import com.example.movieapp.repository.Repository
 
 class MainFragment : Fragment() {
+
+    val repo: Repository = Repository()
 
     companion object {
         fun newInstance() = MainFragment()
@@ -27,6 +30,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 //        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
+        repo.getMovie()
     }
 
 }
