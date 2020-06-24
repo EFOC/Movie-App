@@ -2,8 +2,8 @@ package com.example.movieapp.repository
 
 import android.util.Log
 import com.example.movieapp.BuildConfig
-import com.example.movieapp.Movie
-import com.example.movieapp.MovieApi
+import com.example.movieapp.model.Movie
+import com.example.movieapp.api.MovieApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +20,8 @@ class Repository {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val movieApi: MovieApi =  retrofit.create(MovieApi::class.java)
+        val movieApi: MovieApi =  retrofit.create(
+            MovieApi::class.java)
 
         val call: Call<Movie> = movieApi.getMovieInformation(API_KEY, "Batman")
 
