@@ -21,5 +21,10 @@
             android:text="Search"
             android:onClick="@{() -> viewmodel.buttonClick()}"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_movie_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </layout>
