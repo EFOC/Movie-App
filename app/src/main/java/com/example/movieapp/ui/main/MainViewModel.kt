@@ -7,6 +7,7 @@ class MainViewModel : ViewModel() {
 
     private val repo = Repository()
 
+
     init {
         repo.getMovie()
     }
