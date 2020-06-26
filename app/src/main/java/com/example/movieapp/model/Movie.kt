@@ -7,4 +7,13 @@ class Movie {
     @SerializedName("Title")
     lateinit var title: String
 
+    @SerializedName("Year")
+    lateinit var year: String
+
+    @SerializedName("imdbID")
+    lateinit var id: String
+
+    @SerializedName("Poster")
+    lateinit var posterImage: String
+
 }
