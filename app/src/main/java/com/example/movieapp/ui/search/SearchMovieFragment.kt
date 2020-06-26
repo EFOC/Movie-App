@@ -1,12 +1,15 @@
 package com.example.movieapp.ui.search
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.movieapp.R
+import com.example.movieapp.databinding.SearchMovieFragmentBinding
 
 class SearchMovieFragment : Fragment() {
 
@@ -14,19 +17,19 @@ class SearchMovieFragment : Fragment() {
         fun newInstance() = SearchMovieFragment()
     }
 
-    private lateinit var fragmentViewModel: SearchMovieFragmentViewModel
+    private lateinit var searchMovieFragmentViewModel: SearchMovieFragmentViewModel
+    private lateinit var binding: SearchMovieFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.search_movie_fragment, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.search_movie_fragment, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fragmentViewModel = ViewModelProviders.of(this).get(SearchMovieFragmentViewModel::class.java)
-        // TODO: Use the ViewModel
+        searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
+        binding.viewmodel = searchMovieFragmentViewModel
     }
 
 }
