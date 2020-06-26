@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.model.Movie
 import com.example.movieapp.api.MovieApi
+import com.example.movieapp.model.MovieList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,8 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Repository {
 
     private val API_KEY = BuildConfig.OMDB_API
+    private var movie = Movie()
 
-    fun getMovie() {
+    fun getMovie(): Movie {
         val retrofit = Retrofit.Builder()
             .baseUrl("http://www.omdbapi.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -23,19 +25,22 @@ class Repository {
         val movieApi: MovieApi =  retrofit.create(
             MovieApi::class.java)
 
-        val call: Call<Movie> = movieApi.getMovieInformation(API_KEY, "Batman")
+        val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, "Batman")
 
-        call.enqueue(object : Callback<Movie> {
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
+        call.enqueue(object: Callback<MovieList>{
+            override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 Log.d("TEST", "Error: ${t.message}")
             }
 
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
                 Log.d("TEST", "Success: ${response.body()}")
-                val movie = response.body()
-                Log.d("TEST", "${movie!!.title}")
+                val movieList = response.body()
+                movieList!!.movies.forEach {
+                    Log.d("TEST", it.title)
+                }
             }
 
         })
+        return movie
     }
 }
