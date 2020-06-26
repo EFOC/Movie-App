@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_menu_search_item -> changeFragment(SearchMovieFragment.newInstance())
+            R.id.main_menu_home_item -> changeFragment(MainFragment.newInstance())
         }
         return super.onOptionsItemSelected(item)
     }
