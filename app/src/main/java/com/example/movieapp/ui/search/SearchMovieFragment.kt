@@ -1,4 +1,4 @@
-package com.example.movieapp.ui.main
+package com.example.movieapp.ui.search
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle

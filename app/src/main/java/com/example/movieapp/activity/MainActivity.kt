@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.example.movieapp.ui.main.MainFragment
-import com.example.movieapp.ui.main.SearchMovieFragment
+import com.example.movieapp.ui.search.SearchMovieFragment
 
 class MainActivity : AppCompatActivity() {
 
