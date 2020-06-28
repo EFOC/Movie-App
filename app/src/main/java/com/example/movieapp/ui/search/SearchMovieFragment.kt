@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -39,11 +40,15 @@ class SearchMovieFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        movieRecyclerView = view.findViewById(R.id.search_movie_fragment_recycler_view)
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView(view.context)
+    }
+
+    private fun setUpRecyclerView(context: Context) {
+        movieRecyclerView = binding.searchMovieFragmentRecyclerView
+        movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         repo.getMovie().observe(viewLifecycleOwner, Observer {movieList ->
-            movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             movieRecyclerView.adapter = MovieListAdapter(movieList)
         })
-        super.onViewCreated(view, savedInstanceState)
     }
 }
