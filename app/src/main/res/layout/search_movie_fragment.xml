@@ -14,6 +14,13 @@
         android:orientation="vertical"
         tools:context=".ui.search.SearchMovieFragment">
 
+        <EditText
+            android:id="@+id/search_movie_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewmodel.editTextContent}"
+            android:hint="Movie Name" />
+
         <Button
             android:id="@+id/search_fragment_search_btn"
             android:layout_width="match_parent"
