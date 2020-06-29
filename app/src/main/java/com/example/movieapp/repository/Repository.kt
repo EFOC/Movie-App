@@ -16,18 +16,25 @@ object Repository {
 
     private val API_KEY = BuildConfig.OMDB_API
     private var movieList: MutableLiveData<List<Movie>> = MutableLiveData()
+    private var movieApi: MovieApi
 
-    fun getMovie(): MutableLiveData<List<Movie>> {
-        val retrofit = Retrofit.Builder()
+    init {
+        val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://www.omdbapi.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val movieApi: MovieApi =  retrofit.create(
+         movieApi =  retrofit.create(
             MovieApi::class.java)
+    }
+
+    fun getMovieDetail(movieId: String) {
+
+    }
+
+    fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {
 
         val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, "Batman")
-
         call.enqueue(object: Callback<MovieList>{
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 Log.d("TEST", "Error: ${t.message}")
