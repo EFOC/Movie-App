@@ -12,7 +12,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Repository {
+object Repository {
 
     private val API_KEY = BuildConfig.OMDB_API
     private var movieList: MutableLiveData<List<Movie>> = MutableLiveData()
