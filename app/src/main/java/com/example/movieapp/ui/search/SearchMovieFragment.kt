@@ -2,7 +2,6 @@ package com.example.movieapp.ui.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,8 +45,10 @@ class SearchMovieFragment : Fragment() {
     private fun setUpRecyclerView(context: Context) {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView
         movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        Repository.getMovie().observe(viewLifecycleOwner, Observer {movieList ->
-            movieRecyclerView.adapter = MovieListAdapter(movieList)
-        })
+//        movieRecyclerView.adapter?.notifyDataSetChanged()
+        // TODO: how the fuck i do this
+//        searchMovieFragmentViewModel.getMovieList().observe(viewLifecycleOwner, Observer { movieList ->
+//            movieRecyclerView.adapter = MovieListAdapter(movieList)
+//        })
     }
 }
