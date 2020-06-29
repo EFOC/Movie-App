@@ -1,6 +1,7 @@
 package com.example.movieapp.repository
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.model.Movie
 import com.example.movieapp.api.MovieApi
@@ -14,9 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Repository {
 
     private val API_KEY = BuildConfig.OMDB_API
-    private var movie = Movie()
+    private var movieList: MutableLiveData<List<Movie>> = MutableLiveData()
 
-    fun getMovie(): Movie {
+    fun getMovie(): MutableLiveData<List<Movie>> {
         val retrofit = Retrofit.Builder()
             .baseUrl("http://www.omdbapi.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -34,13 +35,14 @@ class Repository {
 
             override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
                 Log.d("TEST", "Success: ${response.body()}")
-                val movieList = response.body()
-                movieList!!.movies.forEach {
+                val _movieList = response.body()
+                _movieList!!.movies.forEach {
                     Log.d("TEST", it.title)
                 }
+                movieList.value = _movieList.movies
             }
 
         })
-        return movie
+        return movieList
     }
 }
