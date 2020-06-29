@@ -23,7 +23,6 @@ class SearchMovieFragment : Fragment() {
         fun newInstance() = SearchMovieFragment()
     }
 
-    private val repo = Repository()
     private lateinit var searchMovieFragmentViewModel: SearchMovieFragmentViewModel
     private lateinit var binding: SearchMovieFragmentBinding
     private lateinit var movieRecyclerView: RecyclerView
@@ -47,7 +46,7 @@ class SearchMovieFragment : Fragment() {
     private fun setUpRecyclerView(context: Context) {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView
         movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        repo.getMovie().observe(viewLifecycleOwner, Observer {movieList ->
+        Repository.getMovie().observe(viewLifecycleOwner, Observer {movieList ->
             movieRecyclerView.adapter = MovieListAdapter(movieList)
         })
     }
