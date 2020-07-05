@@ -2,18 +2,8 @@ package com.example.movieapp.model
 
 import com.google.gson.annotations.SerializedName
 
-class Movie {
-
-    @SerializedName("Title")
-    lateinit var title: String
-
-    @SerializedName("Year")
-    lateinit var year: String
-
-    @SerializedName("imdbID")
-    lateinit var id: String
-
-    @SerializedName("Poster")
-    lateinit var posterImage: String
-
-}
+data class Movie(
+    @SerializedName("Title") val title: String,
+    @SerializedName("Year") val year: String,
+    @SerializedName("imdbID") val id: String,
+    @SerializedName("Poster") val posterImage: String)
