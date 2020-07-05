@@ -34,7 +34,7 @@ object Repository {
 
     fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {
 
-        val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, "Batman")
+        val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, movieSearch)
         call.enqueue(object: Callback<MovieList>{
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 Log.d("TEST", "Error: ${t.message}")
