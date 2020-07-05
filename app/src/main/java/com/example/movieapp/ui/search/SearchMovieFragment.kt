@@ -28,27 +28,21 @@ class SearchMovieFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.search_movie_fragment, container, false)
+        searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
+        binding.viewmodel = searchMovieFragmentViewModel
+        setUpRecyclerView(container!!.context)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
-        binding.viewmodel = searchMovieFragmentViewModel
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView(view.context)
-    }
-
     private fun setUpRecyclerView(context: Context) {
-        movieRecyclerView = binding.searchMovieFragmentRecyclerView
-        movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        movieRecyclerView.adapter?.notifyDataSetChanged()
+        movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
+            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
         // TODO: how the fuck i do this
-//        searchMovieFragmentViewModel.getMovieList().observe(viewLifecycleOwner, Observer { movieList ->
-//            movieRecyclerView.adapter = MovieListAdapter(movieList)
-//        })
+        val adapter = MovieListAdapter()
+        binding.searchMovieFragmentRecyclerView.adapter = adapter
+        searchMovieFragmentViewModel.movieList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
     }
 }
