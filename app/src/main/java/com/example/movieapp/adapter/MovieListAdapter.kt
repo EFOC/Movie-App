@@ -1,19 +1,19 @@
 package com.example.movieapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieSearchItemBinding
 import com.example.movieapp.model.Movie
-import com.squareup.picasso.Picasso
+import com.example.movieapp.ui.search.MovieSearchItemViewModel
+import com.example.movieapp.ui.search.SearchMovieFragmentViewModel
 
 class MovieListAdapter:
     ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffCallBack()) {
+
+    val movieSearchItemViewModel: MovieSearchItemViewModel = SearchMovieFragmentViewModel()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val singleItemLayout = LayoutInflater.from(parent.context)
@@ -29,6 +29,7 @@ class MovieListAdapter:
     inner class ViewHolder(private var binding: MovieSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
+            binding.viewModel = movieSearchItemViewModel
             binding.executePendingBindings()
         }
     }

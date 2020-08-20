@@ -38,7 +38,6 @@ class SearchMovieFragment : Fragment() {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-        // TODO: how the fuck i do this
         val adapter = MovieListAdapter()
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.movieList.observe(viewLifecycleOwner, Observer {
