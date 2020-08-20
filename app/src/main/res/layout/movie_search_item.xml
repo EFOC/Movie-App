@@ -7,6 +7,9 @@
         <variable
             name="movie"
             type="com.example.movieapp.model.Movie" />
+        <variable
+            name="viewModel"
+            type="com.example.movieapp.ui.search.MovieSearchItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +27,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:onClick="@{() -> viewModel.test()}" />
 
         <TextView
             android:id="@+id/search_movie_item_title"
