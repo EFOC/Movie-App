@@ -9,5 +9,8 @@ import retrofit2.http.Query
 interface MovieApi {
 
     @GET("https://www.omdbapi.com/")
-fun getMovieInformation(@Query("apikey") apiKey: String, @Query("s") movieName: String): Call<MovieList>
+    fun getMovieInformation(@Query("apikey") apiKey: String, @Query("s") movieName: String): Call<MovieList>
+
+    @GET("https://www.omdbapi.com/")
+    fun getMovieDetail(@Query("apikey") apiKey: String, @Query("t") movieId: String): Call<Movie>
 }

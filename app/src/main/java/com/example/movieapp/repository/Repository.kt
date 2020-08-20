@@ -29,7 +29,17 @@ object Repository {
     }
 
     fun getMovieDetail(movieId: String) {
+        val call: Call<Movie> = movieApi.getMovieDetail(API_KEY, movieId)
+        call.enqueue(object : Callback<Movie>{
+            override fun onFailure(call: Call<Movie>, t: Throwable) {
+                Log.d("TEST", "Error: ${t.message}")
+            }
 
+            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {
