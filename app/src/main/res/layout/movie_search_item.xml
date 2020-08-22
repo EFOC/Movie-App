@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"
-            android:onClick="@{() -> viewModel.test()}" />
+            android:onClick="@{() -> viewModel.displayMovieDetailsButton(movie.id)}" />
 
         <TextView
             android:id="@+id/search_movie_item_title"

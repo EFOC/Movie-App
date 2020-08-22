@@ -16,6 +16,7 @@ object Repository {
 
     private val API_KEY = BuildConfig.OMDB_API
     private var movieList: MutableLiveData<List<Movie>> = MutableLiveData()
+    private var movieDetail: MutableLiveData<Movie> = MutableLiveData()
     private var movieApi: MovieApi
 
     init {
@@ -28,7 +29,7 @@ object Repository {
             MovieApi::class.java)
     }
 
-    fun getMovieDetail(movieId: String) {
+    fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
         val call: Call<Movie> = movieApi.getMovieDetail(API_KEY, movieId)
         call.enqueue(object : Callback<Movie>{
             override fun onFailure(call: Call<Movie>, t: Throwable) {
@@ -36,10 +37,12 @@ object Repository {
             }
 
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
-                TODO("Not yet implemented")
+                val movie = response.body()
+                Log.d("TEST", "getting details for ${movie?.title}...")
+                movieDetail.value = movie
             }
-
         })
+        return movieDetail
     }
 
     fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {

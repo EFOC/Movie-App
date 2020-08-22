@@ -12,5 +12,5 @@ interface MovieApi {
     fun getMovieInformation(@Query("apikey") apiKey: String, @Query("s") movieName: String): Call<MovieList>
 
     @GET("https://www.omdbapi.com/")
-    fun getMovieDetail(@Query("apikey") apiKey: String, @Query("t") movieId: String): Call<Movie>
+    fun getMovieDetail(@Query("apikey") apiKey: String, @Query("i") movieId: String): Call<Movie>
 }

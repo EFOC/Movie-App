@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
-import com.example.movieapp.repository.Repository
 
-class SearchMovieFragment : Fragment() {
+class SearchMovieFragment : Fragment(),
+    SearchMovieFragmentViewModel.SearchMovieRecyclerViewItemCallBack {
 
     companion object {
         fun newInstance() = SearchMovieFragment()
@@ -44,4 +44,13 @@ class SearchMovieFragment : Fragment() {
             adapter.submitList(it)
         })
     }
+
+    override fun onItemClickCallBack() {
+        val fragmentManager = activity?.supportFragmentManager
+//        val fragment =
+//        fragmentManager?.beginTransaction().replace(R.id.main_fragment)
+
+    }
+
+
 }
