@@ -2,6 +2,7 @@ package com.example.movieapp.ui.search
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
+import com.example.movieapp.model.Movie
 
-class SearchMovieFragment : Fragment(),
-    SearchMovieFragmentViewModel.SearchMovieRecyclerViewItemCallBack {
+class SearchMovieFragment : Fragment(), SearchMovieRecyclerViewItemCallBack {
 
     companion object {
         fun newInstance() = SearchMovieFragment()
@@ -45,10 +46,11 @@ class SearchMovieFragment : Fragment(),
         })
     }
 
-    override fun onItemClickCallBack() {
-        val fragmentManager = activity?.supportFragmentManager
-//        val fragment =
-//        fragmentManager?.beginTransaction().replace(R.id.main_fragment)
+    override fun onItemClickCallBack(movie: Movie?) {
+        Log.d("TEST", "callback called")
+        val fragment = MovieDetailFragment.newInstance()
+        //TODO: Crash is this line
+//        activity?.supportFragmentManager!!.beginTransaction().replace(R.id.container, fragment).commit()
 
     }
 
