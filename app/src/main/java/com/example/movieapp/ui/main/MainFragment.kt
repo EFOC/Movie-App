@@ -7,8 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.example.movieapp.R
 import com.example.movieapp.databinding.MainFragmentBinding
 
@@ -31,7 +29,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-//        navController.navigate(R.id.action_mainFragment_to_searchMovieFragment)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
