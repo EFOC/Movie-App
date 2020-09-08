@@ -17,7 +17,7 @@ import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
 import com.example.movieapp.model.Movie
 
-class SearchMovieFragment : Fragment(), SearchMovieRecyclerViewItemCallBack {
+class SearchMovieFragment : Fragment() {
 
     companion object {
         fun newInstance() = SearchMovieFragment()
@@ -40,19 +40,10 @@ class SearchMovieFragment : Fragment(), SearchMovieRecyclerViewItemCallBack {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
         val adapter = MovieListAdapter()
+        Log.d("TEST", "activity is $activity from setUp")
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.movieList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
-
-    override fun onItemClickCallBack(movie: Movie?) {
-        Log.d("TEST", "callback called")
-        val fragment = MovieDetailFragment.newInstance()
-        //TODO: Crash is this line
-//        activity?.supportFragmentManager!!.beginTransaction().replace(R.id.container, fragment).commit()
-
-    }
-
-
 }
