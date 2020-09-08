@@ -1,7 +1,6 @@
 package com.example.movieapp.ui.search
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.Movie
@@ -11,7 +10,6 @@ class SearchMovieFragmentViewModel : ViewModel(), MovieSearchItemViewModel {
 
     val editTextContent = MutableLiveData<String>()
     var movieList = Repository.getMovieList("batman")
-    val test: SearchMovieRecyclerViewItemCallBack = SearchMovieFragment()
 
     fun buttonClick() {
         Log.d("TEST", "button clicked")
@@ -32,7 +30,6 @@ class SearchMovieFragmentViewModel : ViewModel(), MovieSearchItemViewModel {
         Log.d("TEST", "getting movie with id")
         val movie = Repository.getMovieDetail(movieId)
         Log.d("TEST", "sending back details")
-        test.onItemClickCallBack(movie.value)
     }
     private fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> = Repository.getMovieList(movieSearch)
 
@@ -40,8 +37,4 @@ class SearchMovieFragmentViewModel : ViewModel(), MovieSearchItemViewModel {
         Log.d("TEST", "button clicked $movieId")
         getMovieDetail(movieId)
     }
-}
-
-interface SearchMovieRecyclerViewItemCallBack {
-    fun onItemClickCallBack(movie: Movie?)
 }
