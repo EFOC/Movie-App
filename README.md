@@ -9,7 +9,9 @@ This app currently uses:
 
 * Kotlin
 * Navigation Component
+* Single Activity - Multiple Fragments Archecture 
 * MVVM
 * Repository Pattern
-* Reftrofit2 framework
+* Reftrofit2 Framework
 
+Will to implement a Log-In system with FireBase and ROOM to save the user's favorite movies.
