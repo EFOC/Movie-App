@@ -15,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
-import com.example.movieapp.model.Movie
 
-class SearchMovieFragment : Fragment() {
+class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
     companion object {
         fun newInstance() = SearchMovieFragment()
@@ -28,9 +27,10 @@ class SearchMovieFragment : Fragment() {
     private lateinit var movieRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.search_movie_fragment, container, false)
         searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
-        binding.viewmodel = searchMovieFragmentViewModel
+
         setUpRecyclerView(container!!.context)
         return binding.root
     }
@@ -40,10 +40,14 @@ class SearchMovieFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
         val adapter = MovieListAdapter()
-        Log.d("TEST", "activity is $activity from setUp")
+        adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.movieList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
+    }
+
+    override fun displayMovieDetailsButton(movieId: String) {
+        searchMovieFragmentViewModel.getMovieDetail(movieId)
     }
 }
