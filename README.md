@@ -14,4 +14,4 @@ This app currently uses:
 * Repository Pattern
 * Reftrofit2 Framework
 
-Will to implement a Log-In system with FireBase and ROOM to save the user's favorite movies.
+Will implement a Log-In system with FireBase and ROOM to save the user's favorite movies.
