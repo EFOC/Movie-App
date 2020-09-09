@@ -13,7 +13,7 @@ import com.example.movieapp.ui.search.SearchMovieFragmentViewModel
 class MovieListAdapter:
     ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffCallBack()) {
 
-    val movieSearchItemViewModel: MovieSearchItemViewModel = SearchMovieFragmentViewModel()
+    lateinit var movieSearchItemViewModel: MovieSearchItemViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val singleItemLayout = LayoutInflater.from(parent.context)
@@ -32,6 +32,10 @@ class MovieListAdapter:
             binding.viewModel = movieSearchItemViewModel
             binding.executePendingBindings()
         }
+    }
+
+    fun setCallback(callback: MovieSearchItemViewModel) {
+        movieSearchItemViewModel = callback
     }
 
     class MovieDiffCallBack() : DiffUtil.ItemCallback<Movie>() {
