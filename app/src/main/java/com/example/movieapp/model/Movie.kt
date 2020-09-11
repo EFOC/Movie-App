@@ -1,19 +1,13 @@
 package com.example.movieapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class Movie {
-
-    @SerializedName("Title")
-    lateinit var title: String
-
-    @SerializedName("Year")
-    lateinit var year: String
-
-    @SerializedName("imdbID")
-    lateinit var id: String
-
-    @SerializedName("Poster")
-    lateinit var posterImage: String
-
-}
+@Parcelize
+data class Movie(
+    @SerializedName("Title") val title: String,
+    @SerializedName("Plot") val plot: String,
+    @SerializedName("Year") val year: String,
+    @SerializedName("imdbID") val id: String,
+    @SerializedName("Poster") val posterImage: String) : Parcelable
