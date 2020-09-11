@@ -27,5 +27,9 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.movieapp.ui.search.MovieDetailFragment"
-        android:label="MovieDetailFragment" />
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="movie"
+            app:argType="com.example.movieapp.model.Movie" />
+    </fragment>
 </navigation>
