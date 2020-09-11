@@ -16,10 +16,8 @@ class SearchMovieFragmentViewModel : ViewModel() {
         this.movieList = getMovieList(editTextContent.value.toString())
     }
 
-    fun getMovieDetail(movieId: String) {
-        Log.d("TEST", "getting movie with id")
-        val movie = Repository.getMovieDetail(movieId)
-        Log.d("TEST", "sending back details")
+    fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
+        return Repository.getMovieDetail(movieId)
     }
     private fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> = Repository.getMovieList(movieSearch)
 

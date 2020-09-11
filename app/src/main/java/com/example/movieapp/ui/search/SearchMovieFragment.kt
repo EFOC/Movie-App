@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
@@ -48,6 +50,9 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
     }
 
     override fun displayMovieDetailsButton(movieId: String) {
-        searchMovieFragmentViewModel.getMovieDetail(movieId)
+        searchMovieFragmentViewModel.getMovieDetail(movieId).observe(viewLifecycleOwner, Observer {movie ->
+            val bundle = bundleOf("movie" to movie)
+            view?.findNavController()?.navigate(R.id.movieDetailFragment, bundle)
+        })
     }
 }
