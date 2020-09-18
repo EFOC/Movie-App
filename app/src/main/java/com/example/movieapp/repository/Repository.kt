@@ -14,14 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Repository {
 
-    private const val API_KEY = BuildConfig.OMDB_API
+    private const val API_KEY = BuildConfig.THEMOVIEDB;
     private lateinit var movieList: MutableLiveData<List<Movie>>
     private lateinit var movieDetail: MutableLiveData<Movie>
     private var movieApi: MovieApi
 
     init {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://www.omdbapi.com/")
+            .baseUrl("https://api.themoviedb.org/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -30,7 +30,7 @@ object Repository {
     }
 
     fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
-        val call: Call<Movie> = movieApi.getMovieDetail(API_KEY, movieId)
+        val call: Call<Movie> = movieApi.getMovieDetail(movieId, API_KEY)
         movieDetail = MutableLiveData()
         call.enqueue(object : Callback<Movie>{
             override fun onFailure(call: Call<Movie>, t: Throwable) {
@@ -48,6 +48,27 @@ object Repository {
 
     fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {
         val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, movieSearch)
+        movieList = MutableLiveData()
+        call.enqueue(object: Callback<MovieList>{
+            override fun onFailure(call: Call<MovieList>, t: Throwable) {
+                Log.d("TEST", "Error: ${t.message}")
+            }
+
+            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
+                Log.d("TEST", "Success: ${response.body()}")
+                val _movieList: MovieList? = response.body()
+                _movieList!!.movies.forEach {
+                    Log.d("TEST", it.title)
+                }
+                movieList.value = _movieList.movies
+            }
+
+        })
+        return movieList
+    }
+
+    fun getTrendingMovies(): MutableLiveData<List<Movie>> {
+        val call: Call<MovieList> = movieApi.getTrendingMovies(API_KEY)
         movieList = MutableLiveData()
         call.enqueue(object: Callback<MovieList>{
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
