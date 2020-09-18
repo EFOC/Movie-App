@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Movie App</string>
+    <string name="movie_poster_base_url">http://image.tmdb.org/t/p/</string>
+    <string name="movie_poster_w400">http://image.tmdb.org/t/p/w400%s</string>
 </resources>

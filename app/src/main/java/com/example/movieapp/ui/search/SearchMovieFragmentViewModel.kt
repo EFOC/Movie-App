@@ -9,7 +9,7 @@ import com.example.movieapp.repository.Repository
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
-    var movieList = Repository.getMovieList("batman")
+    var movieList = Repository.getTrendingMovies()
 
 
     fun buttonClick() {
