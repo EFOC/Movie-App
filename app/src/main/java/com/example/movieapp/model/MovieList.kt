@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 class MovieList {
 
-    @SerializedName("Search")
+    @SerializedName("results")
     lateinit var movies: List<Movie>
 }
