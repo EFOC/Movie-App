@@ -28,13 +28,13 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField 'String', 'OMDB_API', OMDB_API
+            buildConfigField 'String', 'THEMOVIEDB', THEMOVIEDB
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'OMDB_API', OMDB_API
+            buildConfigField 'String', 'THEMOVIEDB', THEMOVIEDB
         }
 
         dataBinding {
