@@ -14,6 +14,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
         when(selection){
             1 -> addTrendingList()
             2 -> addSearchList()
+            3 -> addPopularList()
         }
     }
 
@@ -27,6 +28,13 @@ class SearchMovieFragmentViewModel : ViewModel() {
     private fun addSearchList() {
         finalList.removeSource(Repository.getMovieList(editTextContent.value.toString()))
         finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) {
+            finalList.value = it
+        }
+    }
+
+    private fun addPopularList() {
+        finalList.removeSource(Repository.getPopularMovies())
+        finalList.addSource(Repository.getPopularMovies()) {
             finalList.value = it
         }
     }
