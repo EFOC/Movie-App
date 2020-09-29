@@ -1,6 +1,7 @@
 package com.example.movieapp.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.model.Movie
@@ -15,8 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Repository {
 
     private const val API_KEY = BuildConfig.THEMOVIEDB;
-    private lateinit var movieList: MutableLiveData<List<Movie>>
-    private lateinit var movieDetail: MutableLiveData<Movie>
+    private lateinit var liveDataMovies: MutableLiveData<Any>
     private var movieApi: MovieApi
 
     init {
@@ -29,62 +29,33 @@ object Repository {
             MovieApi::class.java)
     }
 
-    fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
-        val call: Call<Movie> = movieApi.getMovieDetail(movieId, API_KEY)
-        movieDetail = MutableLiveData()
-        call.enqueue(object : Callback<Movie>{
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
+    private fun <T> serviceGen(call: Call<T>, isList: Boolean): MutableLiveData<Any> {
+        liveDataMovies = MutableLiveData()
+        call.enqueue(object : Callback<T>{
+            override fun onFailure(call: Call<T>, t: Throwable) {
                 Log.d("TEST", "Error: ${t.message}")
             }
 
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+            override fun onResponse(call: Call<T>, response: Response<T>) {
                 val movie = response.body()
-                Log.d("TEST", "getting details for ${movie?.title}...")
-                movieDetail.value = movie
+                if (isList)
+                    liveDataMovies.value = (movie as MovieList).movies
+                else
+                    liveDataMovies.value = movie
             }
         })
-        return movieDetail
+        return liveDataMovies
     }
 
-    fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> {
-        val call: Call<MovieList> = movieApi.getMovieInformation(API_KEY, movieSearch)
-        movieList = MutableLiveData()
-        call.enqueue(object: Callback<MovieList>{
-            override fun onFailure(call: Call<MovieList>, t: Throwable) {
-                Log.d("TEST", "Error: ${t.message}")
-            }
+    fun getMovieDetail(movieId: String): MutableLiveData<Movie> =
+        serviceGen(movieApi.getMovieDetail(movieId, API_KEY), false) as MutableLiveData<Movie>
 
-            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
-                Log.d("TEST", "Success: ${response.body()}")
-                val _movieList: MovieList? = response.body()
-                _movieList!!.movies.forEach {
-                    Log.d("TEST", it.title)
-                }
-                movieList.value = _movieList.movies
-            }
+    fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> =
+        serviceGen(movieApi.getMovieInformation(API_KEY, movieSearch), true) as MutableLiveData<List<Movie>>
 
-        })
-        return movieList
-    }
+    fun getTrendingMovies(): MutableLiveData<List<Movie>> =
+        serviceGen(movieApi.getTrendingMovies(API_KEY), true) as MutableLiveData<List<Movie>>
 
-    fun getTrendingMovies(): MutableLiveData<List<Movie>> {
-        val call: Call<MovieList> = movieApi.getTrendingMovies(API_KEY)
-        movieList = MutableLiveData()
-        call.enqueue(object: Callback<MovieList>{
-            override fun onFailure(call: Call<MovieList>, t: Throwable) {
-                Log.d("TEST", "Error: ${t.message}")
-            }
-
-            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
-                Log.d("TEST", "Success: ${response.body()}")
-                val _movieList: MovieList? = response.body()
-                _movieList!!.movies.forEach {
-                    Log.d("TEST", it.title)
-                }
-                movieList.value = _movieList.movies
-            }
-
-        })
-        return movieList
-    }
+    fun getPopularMovies(): MutableLiveData<List<Movie>> =
+        serviceGen(movieApi.getPopularMovies(API_KEY), true) as MutableLiveData<List<Movie>>
 }
