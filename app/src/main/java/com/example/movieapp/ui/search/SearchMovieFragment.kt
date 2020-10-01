@@ -49,6 +49,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         searchMovieFragmentViewModel.setSelection(1)
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
             adapter.submitList(movieList)
+            binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
         })
     }
 
