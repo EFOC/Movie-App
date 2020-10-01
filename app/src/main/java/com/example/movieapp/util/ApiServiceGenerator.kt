@@ -28,7 +28,7 @@ class ApiServiceGenerator {
         createService()
     }
 
-    fun <T> movieaApiCall(call: Call<T>, isList: Boolean) : MutableLiveData<Any> {
+    fun <T> movieApiCall(call: Call<T>, isList: Boolean) : MutableLiveData<Any> {
         val liveDataMovies: MutableLiveData<Any> = MutableLiveData()
         call.enqueue(object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {

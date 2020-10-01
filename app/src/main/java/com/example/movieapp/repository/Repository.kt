@@ -22,14 +22,14 @@ object Repository {
 
 
     fun getMovieDetail(movieId: String): MutableLiveData<Movie> =
-        apiServiceGenerator.movieaApiCall(movieApi.getMovieDetail(movieId, API_KEY), false) as MutableLiveData<Movie>
+        apiServiceGenerator.movieApiCall(movieApi.getMovieDetail(movieId, API_KEY), false) as MutableLiveData<Movie>
 
     fun getMovieList(movieSearch: String): MutableLiveData<List<Movie>> =
-        apiServiceGenerator.movieaApiCall(movieApi.getMovieInformation(API_KEY, movieSearch), true) as MutableLiveData<List<Movie>>
+        apiServiceGenerator.movieApiCall(movieApi.getMovieInformation(API_KEY, movieSearch), true) as MutableLiveData<List<Movie>>
 
     fun getTrendingMovies(): MutableLiveData<List<Movie>> =
-        apiServiceGenerator.movieaApiCall(movieApi.getTrendingMovies(API_KEY), true) as MutableLiveData<List<Movie>>
+        apiServiceGenerator.movieApiCall(movieApi.getTrendingMovies(API_KEY), true) as MutableLiveData<List<Movie>>
 
     fun getPopularMovies(): MutableLiveData<List<Movie>> =
-        apiServiceGenerator.movieaApiCall(movieApi.getPopularMovies(API_KEY), true) as MutableLiveData<List<Movie>>
+        apiServiceGenerator.movieApiCall(movieApi.getPopularMovies(API_KEY), true) as MutableLiveData<List<Movie>>
 }
