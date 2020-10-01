@@ -15,6 +15,9 @@ interface MovieApi {
     @GET("https://api.themoviedb.org/3/trending/movie/day")
     fun getTrendingMovies(@Query("api_key") apiKey: String): Call<MovieList>
 
+    @GET("https://api.themoviedb.org/3/movie/popular?}")
+    fun getPopularMovies(@Query("api_key") movieId: String): Call<MovieList>
+
     @GET("https://api.themoviedb.org/3/movie/{movie_id}")
     fun getMovieDetail(@Path("movie_id") movieId: String, @Query("api_key") apiKey: String): Call<Movie>
 }

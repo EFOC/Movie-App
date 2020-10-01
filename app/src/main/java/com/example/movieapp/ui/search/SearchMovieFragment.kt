@@ -32,6 +32,8 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.search_movie_fragment, container, false)
         searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.viewmodel = searchMovieFragmentViewModel
 
         setUpRecyclerView(container!!.context)
         return binding.root
@@ -44,8 +46,10 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         val adapter = MovieListAdapter()
         adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
-        searchMovieFragmentViewModel.movieList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+        searchMovieFragmentViewModel.setSelection(1)
+        searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
+            adapter.submitList(movieList)
+            binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
         })
     }
 

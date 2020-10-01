@@ -9,6 +9,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/search_movie_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@={viewmodel.editTextContent}"
+            android:inputType="text"
             android:hint="Movie Name" />
 
         <Button
@@ -26,8 +28,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search"
-            android:onClick="@{() -> viewmodel.buttonClick()}"/>
+            android:onClick="@{() -> viewmodel.setSelection(2)}"/>
+        <LinearLayout
+            android:id="@+id/search_movie_fragment_button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trending"
+                android:onClick="@{() -> viewmodel.setSelection(1)}"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular"
+                android:onClick="@{() -> viewmodel.setSelection(3)}"/>
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_movie_fragment_recycler_view"
             android:layout_width="match_parent"
