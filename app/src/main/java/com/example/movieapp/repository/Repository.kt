@@ -1,18 +1,10 @@
 package com.example.movieapp.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.model.Movie
 import com.example.movieapp.api.MovieApi
-import com.example.movieapp.model.MovieList
 import com.example.movieapp.util.ApiServiceGenerator
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 object Repository {
 
