@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,8 @@ class MainFragment : Fragment() {
         val response = IdpResponse.fromResultIntent(data)
         if (requestCode == 1001) {
             Log.d("TEST", "Success sign in by ${FirebaseAuth.getInstance().currentUser?.displayName}")
-            navController.navigate(R.id.searchMovieFragment)
+            val bundle = bundleOf("signedIn" to true)
+            navController.navigate(R.id.searchMovieFragment, bundle)
         } else {
             Log.d("TEST", "failed sign in by ${response?.error?.errorCode}")
         }
