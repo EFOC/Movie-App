@@ -1,14 +1,27 @@
 package com.example.movieapp.ui.search
 
+import android.view.View
 import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
+import com.example.movieapp.util.FirebaseUserLiveData
 
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
+    var signedIn: Boolean = false
 
+    enum class Selection {
+        TRENDINGLIST, SEARCHLIST, POPULARLIST
+    }
+
+    fun signOutVisible(): Int {
+        return when (signedIn) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+    }
 
     fun setSelection(selection: Int) {
         when(selection){
