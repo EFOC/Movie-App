@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.search
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
@@ -10,16 +11,37 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
-    var signedIn: Boolean = false
+    var signedIn: MutableLiveData<Int> = MutableLiveData()
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST
     }
 
-    fun signOutVisible(): Int {
-        return when (signedIn) {
-            true -> View.VISIBLE
-            false -> View.GONE
+    enum class AuthenticationState {
+        AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
+    }
+
+    fun checkUserState(state: AuthenticationState) {
+        when (state) {
+            AuthenticationState.AUTHENTICATED -> userPage()
+            AuthenticationState.UNAUTHENTICATED -> anonymizePage()
+        }
+    }
+
+    private fun anonymizePage() {
+        signedIn.postValue(View.GONE)
+    }
+
+    private fun userPage() {
+        signedIn.postValue(View.VISIBLE)
+    }
+
+    var authenticationState = Transformations.map(FirebaseUserLiveData()) { user ->
+        Log.d("TEST", "in the state function")
+        if (user != null) {
+            AuthenticationState.AUTHENTICATED
+        } else {
+            AuthenticationState.UNAUTHENTICATED
         }
     }
 
