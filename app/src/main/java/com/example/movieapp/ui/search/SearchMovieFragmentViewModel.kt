@@ -37,7 +37,6 @@ class SearchMovieFragmentViewModel : ViewModel() {
     }
 
     var authenticationState = Transformations.map(FirebaseUserLiveData()) { user ->
-        Log.d("TEST", "in the state function")
         if (user != null) {
             AuthenticationState.AUTHENTICATED
         } else {
@@ -45,11 +44,13 @@ class SearchMovieFragmentViewModel : ViewModel() {
         }
     }
 
-    fun setSelection(selection: Int) {
+    fun getMovieDetail(movieId: String): MutableLiveData<Movie> = Repository.getMovieDetail(movieId)
+
+    fun setSelection(selection: Selection) {
         when(selection){
-            1 -> addTrendingList()
-            2 -> addSearchList()
-            3 -> addPopularList()
+            Selection.TRENDINGLIST -> addTrendingList()
+            Selection.SEARCHLIST -> addSearchList()
+            Selection.POPULARLIST -> addPopularList()
         }
     }
 
@@ -73,9 +74,4 @@ class SearchMovieFragmentViewModel : ViewModel() {
             finalList.value = it
         }
     }
-
-    fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
-        return Repository.getMovieDetail(movieId)
-    }
-
 }

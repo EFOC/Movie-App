@@ -18,6 +18,7 @@ import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.AuthenticationState.*
+import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
 import com.example.movieapp.util.FirebaseUserLiveData
 import com.firebase.ui.auth.AuthUI
 
@@ -54,7 +55,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         val adapter = MovieListAdapter()
         adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
-        searchMovieFragmentViewModel.setSelection(1)
+        searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
             adapter.submitList(movieList)
             binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
