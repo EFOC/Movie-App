@@ -49,7 +49,7 @@
                 android:id="@+id/sign_out_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.signOutVisible()}"
+                android:visibility="@{viewmodel.signedIn}"
                 android:text="Sign Out" />
 
         </LinearLayout>
