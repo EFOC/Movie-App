@@ -1,6 +1,9 @@
 package com.example.movieapp.util
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -12,7 +15,7 @@ class FirebaseUserLiveData: LiveData<FirebaseUser?>() {
     }
 
     override fun onActive() {
-        firebaseAuth.addAuthStateListener { authStateListener }
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     override fun onInactive() {
