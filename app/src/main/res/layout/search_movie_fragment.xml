@@ -6,6 +6,7 @@
         <variable
             name="viewmodel"
             type="com.example.movieapp.ui.search.SearchMovieFragmentViewModel" />
+        <import type="com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection" />
     </data>
 
     <LinearLayout
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search"
-            android:onClick="@{() -> viewmodel.setSelection(2)}"/>
+            android:onClick="@{() -> viewmodel.setSelection(Selection.SEARCHLIST)}"/>
         <LinearLayout
             android:id="@+id/search_movie_fragment_button_container"
             android:layout_width="wrap_content"
@@ -38,13 +39,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Trending"
-                android:onClick="@{() -> viewmodel.setSelection(1)}"/>
+                android:onClick="@{() -> viewmodel.setSelection(Selection.TRENDINGLIST)}"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Popular"
-                android:onClick="@{() -> viewmodel.setSelection(3)}"/>
+                android:onClick="@{() -> viewmodel.setSelection(Selection.POPULARLIST)}"/>
+            <Button
+                android:id="@+id/sign_out_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewmodel.signedIn}"
+                android:text="Sign Out" />
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView

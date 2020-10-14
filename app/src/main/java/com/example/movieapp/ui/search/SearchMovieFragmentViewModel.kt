@@ -1,20 +1,56 @@
 package com.example.movieapp.ui.search
 
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
+import com.example.movieapp.util.FirebaseUserLiveData
 
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
+    var signedIn: MutableLiveData<Int> = MutableLiveData()
 
+    enum class Selection {
+        TRENDINGLIST, SEARCHLIST, POPULARLIST
+    }
 
-    fun setSelection(selection: Int) {
+    enum class AuthenticationState {
+        AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
+    }
+
+    fun checkUserState(state: AuthenticationState) {
+        when (state) {
+            AuthenticationState.AUTHENTICATED -> userPage()
+            AuthenticationState.UNAUTHENTICATED -> anonymizePage()
+        }
+    }
+
+    private fun anonymizePage() {
+        signedIn.postValue(View.GONE)
+    }
+
+    private fun userPage() {
+        signedIn.postValue(View.VISIBLE)
+    }
+
+    var authenticationState = Transformations.map(FirebaseUserLiveData()) { user ->
+        if (user != null) {
+            AuthenticationState.AUTHENTICATED
+        } else {
+            AuthenticationState.UNAUTHENTICATED
+        }
+    }
+
+    fun getMovieDetail(movieId: String): MutableLiveData<Movie> = Repository.getMovieDetail(movieId)
+
+    fun setSelection(selection: Selection) {
         when(selection){
-            1 -> addTrendingList()
-            2 -> addSearchList()
-            3 -> addPopularList()
+            Selection.TRENDINGLIST -> addTrendingList()
+            Selection.SEARCHLIST -> addSearchList()
+            Selection.POPULARLIST -> addPopularList()
         }
     }
 
@@ -38,9 +74,4 @@ class SearchMovieFragmentViewModel : ViewModel() {
             finalList.value = it
         }
     }
-
-    fun getMovieDetail(movieId: String): MutableLiveData<Movie> {
-        return Repository.getMovieDetail(movieId)
-    }
-
 }
