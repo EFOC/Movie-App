@@ -12,7 +12,6 @@ object Repository {
     private val apiServiceGenerator = ApiServiceGenerator()
     private var movieApi: MovieApi = ApiServiceGenerator.createService()
 
-
     fun getMovieDetail(movieId: String): MutableLiveData<Movie> =
         apiServiceGenerator.movieApiCall(movieApi.getMovieDetail(movieId, API_KEY), false) as MutableLiveData<Movie>
 
