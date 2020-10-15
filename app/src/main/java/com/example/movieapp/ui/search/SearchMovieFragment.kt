@@ -21,6 +21,8 @@ import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Authenticatio
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
 import com.example.movieapp.util.FirebaseUserLiveData
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
@@ -31,6 +33,8 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
     private lateinit var searchMovieFragmentViewModel: SearchMovieFragmentViewModel
     private lateinit var binding: SearchMovieFragmentBinding
     private lateinit var movieRecyclerView: RecyclerView
+    lateinit var myRef: DatabaseReference
+    lateinit var firebaseDatabase: FirebaseDatabase
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -44,15 +48,22 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         searchMovieFragmentViewModel.authenticationState.observe(viewLifecycleOwner, Observer { state ->
             searchMovieFragmentViewModel.checkUserState(state)
         })
+
+        setUpFirebaseDatabase()
         setUpRecyclerView(container!!.context)
         return binding.root
+    }
+
+    private fun setUpFirebaseDatabase() {
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        myRef = firebaseDatabase.reference
     }
 
     private fun setUpRecyclerView(context: Context) {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-        val adapter = MovieListAdapter()
+        val adapter = MovieListAdapter(searchMovieFragmentViewModel)
         adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
