@@ -61,6 +61,7 @@
             android:layout_marginTop="88dp"
             android:text="Save Movie"
             android:visibility="@{fragmentViewModel.signedIn}"
+            android:onClick="@{() -> fragmentViewModel.saveMovieToDatabase(movie.id)}"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
