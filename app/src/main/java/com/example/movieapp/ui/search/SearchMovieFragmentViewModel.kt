@@ -33,7 +33,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     fun saveMovieToDatabase(movieId: String) {
         val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef.child("user").child(user).child(movieId).setValue(true)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).setValue(true)
     }
 
     fun checkUserState(state: AuthenticationState) {
