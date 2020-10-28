@@ -2,7 +2,6 @@ package com.example.movieapp.ui.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
-import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.AuthenticationState.*
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
-import com.example.movieapp.util.FirebaseUserLiveData
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
@@ -33,8 +28,6 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
     private lateinit var searchMovieFragmentViewModel: SearchMovieFragmentViewModel
     private lateinit var binding: SearchMovieFragmentBinding
     private lateinit var movieRecyclerView: RecyclerView
-    lateinit var myRef: DatabaseReference
-    lateinit var firebaseDatabase: FirebaseDatabase
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -49,14 +42,9 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             searchMovieFragmentViewModel.checkUserState(state)
         })
 
-        setUpFirebaseDatabase()
+        searchMovieFragmentViewModel.setUpFirebaseDatabase()
         setUpRecyclerView(container!!.context)
         return binding.root
-    }
-
-    private fun setUpFirebaseDatabase() {
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        myRef = firebaseDatabase.reference
     }
 
     private fun setUpRecyclerView(context: Context) {

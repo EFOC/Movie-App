@@ -6,12 +6,17 @@ import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
 import com.example.movieapp.util.FirebaseUserLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
     var signedIn: MutableLiveData<Int> = MutableLiveData()
+    lateinit var myRef: DatabaseReference
+    lateinit var firebaseDatabase: FirebaseDatabase
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST
@@ -19,6 +24,16 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
+    }
+
+    fun setUpFirebaseDatabase() {
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        myRef = firebaseDatabase.reference
+    }
+
+    fun saveMovieToDatabase(movieId: String) {
+        val user = FirebaseAuth.getInstance().currentUser!!.uid
+        myRef.child("user").child(user).child(movieId).setValue(true)
     }
 
     fun checkUserState(state: AuthenticationState) {
