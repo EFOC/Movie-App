@@ -7,14 +7,14 @@ import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
 import com.example.movieapp.util.FirebaseUserLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
     var signedIn: MutableLiveData<Int> = MutableLiveData()
+//    var userMovies: MutableLiveData<ArrayList<LiveData<Movie>>> = MutableLiveData()
     lateinit var myRef: DatabaseReference
     lateinit var firebaseDatabase: FirebaseDatabase
 
@@ -31,9 +31,34 @@ class SearchMovieFragmentViewModel : ViewModel() {
         myRef = firebaseDatabase.reference
     }
 
-    fun saveMovieToDatabase(movieId: String) {
+    fun saveMovieToDatabase(movieId: String, movieName : String,movieImageUrl: String) {
         val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef.child("users").child(user).child("saved_movies").child(movieId).setValue(true)
+//        myRef.child("users").child(user).child("saved_movies").child(movieId).setValue(true)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").setValue(movieImageUrl)
+//        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
+    }
+
+    fun getUserMovies() {
+        Log.d("TEST", "Getting user movies")
+        myRef.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(ds: DataSnapshot) {
+                Log.d("TEST", "Getting snapshot of database")
+                val user = FirebaseAuth.getInstance().currentUser!!.uid
+                for (test in ds.children) {
+                    test.child(user).child("saved_movies").children.forEach {
+                        Log.d("TEST", "children ${it.key}" +
+                                "\n values ${it.child("movie_name").value}")
+//                        userMovies.value!!.add(Repository.getMovieDetail(it.key.toString()))
+                    }
+                }
+            }
+
+        })
     }
 
     fun checkUserState(state: AuthenticationState) {

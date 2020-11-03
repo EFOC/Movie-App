@@ -2,12 +2,14 @@ package com.example.movieapp.ui.search
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -42,6 +44,11 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             searchMovieFragmentViewModel.checkUserState(state)
         })
 
+        binding.accountButton.setOnClickListener {
+            Log.d("TEST", "button clicked")
+            tinderCardPopup()
+        }
+
         searchMovieFragmentViewModel.setUpFirebaseDatabase()
         setUpRecyclerView(container!!.context)
         return binding.root
@@ -59,6 +66,10 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             adapter.submitList(movieList)
             binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
         })
+    }
+
+    private fun tinderCardPopup() {
+        view?.findNavController()?.navigate(R.id.movieSwipeFragment)
     }
 
     override fun displayMovieDetailsButton(movieId: String) {
