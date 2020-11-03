@@ -27,6 +27,9 @@
             android:name="title"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_searchMovieFragment_to_movieSwipeFragment"
+            app:destination="@id/movieSwipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -36,4 +39,9 @@
             android:name="movie"
             app:argType="com.example.movieapp.model.Movie" />
     </fragment>
+    <fragment
+        android:id="@+id/movieSwipeFragment"
+        android:name="com.example.movieapp.ui.search.MovieSwipeFragment"
+        android:label="movie_swipe_fragment"
+        tools:layout="@layout/movie_swipe_fragment" />
 </navigation>
