@@ -19,6 +19,13 @@ object FireBaseFetcher {
         myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").setValue(movieImageUrl)
     }
 
+    fun removeMovieFromDatabase(movieId: String) {
+        Log.d("TEST", "Removing movie from database")
+        val user = FirebaseAuth.getInstance().currentUser!!.uid
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").removeValue()
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").removeValue()
+    }
+
     fun getUserMovies(): LiveData<List<Movie>> {
         Log.d("TEST", "Getting user movies")
 
