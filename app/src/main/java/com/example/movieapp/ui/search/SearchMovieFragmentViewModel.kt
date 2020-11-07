@@ -11,7 +11,8 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
-    var signedIn: MutableLiveData<Int> = MutableLiveData()
+    val signedIn: MutableLiveData<Int> = MutableLiveData()
+    val removeMovie: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
@@ -23,6 +24,10 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String) {
         FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl)
+    }
+
+    fun removeMovieFromDatabase(movieId: String) {
+        FireBaseFetcher.removeMovieFromDatabase(movieId)
     }
 
     fun checkUserState(state: AuthenticationState) {
@@ -85,5 +90,6 @@ class SearchMovieFragmentViewModel : ViewModel() {
         finalList.addSource(FireBaseFetcher.getUserMovies()) {
             finalList.value = it
         }
+        finalList.removeSource(FireBaseFetcher.getUserMovies())
     }
 }
