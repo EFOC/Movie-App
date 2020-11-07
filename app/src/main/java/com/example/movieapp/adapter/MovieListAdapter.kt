@@ -10,7 +10,7 @@ import com.example.movieapp.model.Movie
 import com.example.movieapp.ui.search.MovieSearchItemViewModel
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel
 
-class MovieListAdapter:
+class MovieListAdapter(val searchMovieFragmentViewModel: SearchMovieFragmentViewModel):
     ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffCallBack()) {
 
     lateinit var movieSearchItemViewModel: MovieSearchItemViewModel
@@ -30,6 +30,7 @@ class MovieListAdapter:
         fun bind(movie: Movie) {
             binding.movie = movie
             binding.viewModel = movieSearchItemViewModel
+            binding.fragmentViewModel = searchMovieFragmentViewModel
             binding.executePendingBindings()
         }
     }

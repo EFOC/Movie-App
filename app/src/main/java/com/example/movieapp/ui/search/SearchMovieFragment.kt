@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
-import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.AuthenticationState.*
+import com.example.movieapp.model.Movie
+import com.example.movieapp.model.MovieList
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
-import com.example.movieapp.util.FirebaseUserLiveData
 import com.firebase.ui.auth.AuthUI
 
 class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
@@ -52,7 +53,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-        val adapter = MovieListAdapter()
+        val adapter = MovieListAdapter(searchMovieFragmentViewModel)
         adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.setSelection(TRENDINGLIST)

@@ -1,10 +1,10 @@
 package com.example.movieapp.ui.search
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
+import com.example.movieapp.util.FireBaseFetcher
 import com.example.movieapp.util.FirebaseUserLiveData
 
 class SearchMovieFragmentViewModel : ViewModel() {
@@ -14,11 +14,15 @@ class SearchMovieFragmentViewModel : ViewModel() {
     var signedIn: MutableLiveData<Int> = MutableLiveData()
 
     enum class Selection {
-        TRENDINGLIST, SEARCHLIST, POPULARLIST
+        TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
     }
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
+    }
+
+    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String) {
+        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl)
     }
 
     fun checkUserState(state: AuthenticationState) {
@@ -51,6 +55,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
             Selection.TRENDINGLIST -> addTrendingList()
             Selection.SEARCHLIST -> addSearchList()
             Selection.POPULARLIST -> addPopularList()
+            Selection.USERLIST -> addUsersList()
         }
     }
 
@@ -71,6 +76,13 @@ class SearchMovieFragmentViewModel : ViewModel() {
     private fun addPopularList() {
         finalList.removeSource(Repository.getPopularMovies())
         finalList.addSource(Repository.getPopularMovies()) {
+            finalList.value = it
+        }
+    }
+
+    private fun addUsersList() {
+        finalList.removeSource(FireBaseFetcher.getUserMovies())
+        finalList.addSource(FireBaseFetcher.getUserMovies()) {
             finalList.value = it
         }
     }
