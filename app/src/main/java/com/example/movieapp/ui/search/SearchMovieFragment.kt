@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
+import com.example.movieapp.model.Movie
+import com.example.movieapp.model.MovieList
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
 import com.firebase.ui.auth.AuthUI
 
@@ -43,13 +45,6 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         searchMovieFragmentViewModel.authenticationState.observe(viewLifecycleOwner, Observer { state ->
             searchMovieFragmentViewModel.checkUserState(state)
         })
-
-        binding.accountButton.setOnClickListener {
-            Log.d("TEST", "button clicked")
-            tinderCardPopup()
-        }
-
-        searchMovieFragmentViewModel.setUpFirebaseDatabase()
         setUpRecyclerView(container!!.context)
         return binding.root
     }
@@ -66,10 +61,6 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             adapter.submitList(movieList)
             binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
         })
-    }
-
-    private fun tinderCardPopup() {
-        view?.findNavController()?.navigate(R.id.movieSwipeFragment)
     }
 
     override fun displayMovieDetailsButton(movieId: String) {

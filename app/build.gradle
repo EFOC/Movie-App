@@ -65,8 +65,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
-    // Tinder-like swipe cards library
-    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
 
     // Navigation libraries
     def nav_version = "2.3.0"
