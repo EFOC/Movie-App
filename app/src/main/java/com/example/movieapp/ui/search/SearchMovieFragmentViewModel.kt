@@ -1,64 +1,28 @@
 package com.example.movieapp.ui.search
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
+import com.example.movieapp.util.FireBaseFetcher
 import com.example.movieapp.util.FirebaseUserLiveData
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
     var signedIn: MutableLiveData<Int> = MutableLiveData()
-//    var userMovies: MutableLiveData<ArrayList<LiveData<Movie>>> = MutableLiveData()
-    lateinit var myRef: DatabaseReference
-    lateinit var firebaseDatabase: FirebaseDatabase
 
     enum class Selection {
-        TRENDINGLIST, SEARCHLIST, POPULARLIST
+        TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
     }
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
-    fun setUpFirebaseDatabase() {
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        myRef = firebaseDatabase.reference
-    }
-
-    fun saveMovieToDatabase(movieId: String, movieName : String,movieImageUrl: String) {
-        val user = FirebaseAuth.getInstance().currentUser!!.uid
-//        myRef.child("users").child(user).child("saved_movies").child(movieId).setValue(true)
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").setValue(movieImageUrl)
-//        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
-    }
-
-    fun getUserMovies() {
-        Log.d("TEST", "Getting user movies")
-        myRef.addValueEventListener(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(ds: DataSnapshot) {
-                Log.d("TEST", "Getting snapshot of database")
-                val user = FirebaseAuth.getInstance().currentUser!!.uid
-                for (test in ds.children) {
-                    test.child(user).child("saved_movies").children.forEach {
-                        Log.d("TEST", "children ${it.key}" +
-                                "\n values ${it.child("movie_name").value}")
-//                        userMovies.value!!.add(Repository.getMovieDetail(it.key.toString()))
-                    }
-                }
-            }
-
-        })
+    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String) {
+        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl)
     }
 
     fun checkUserState(state: AuthenticationState) {
@@ -91,6 +55,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
             Selection.TRENDINGLIST -> addTrendingList()
             Selection.SEARCHLIST -> addSearchList()
             Selection.POPULARLIST -> addPopularList()
+            Selection.USERLIST -> addUsersList()
         }
     }
 
@@ -111,6 +76,13 @@ class SearchMovieFragmentViewModel : ViewModel() {
     private fun addPopularList() {
         finalList.removeSource(Repository.getPopularMovies())
         finalList.addSource(Repository.getPopularMovies()) {
+            finalList.value = it
+        }
+    }
+
+    private fun addUsersList() {
+        finalList.removeSource(FireBaseFetcher.getUserMovies())
+        finalList.addSource(FireBaseFetcher.getUserMovies()) {
             finalList.value = it
         }
     }
