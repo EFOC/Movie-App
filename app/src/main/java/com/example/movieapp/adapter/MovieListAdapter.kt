@@ -39,6 +39,10 @@ class MovieListAdapter(val searchMovieFragmentViewModel: SearchMovieFragmentView
         movieSearchItemViewModel = callback
     }
 
+    fun getItemAt(position: Int): Movie {
+        return getItem(position)
+    }
+
     class MovieDiffCallBack() : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
