@@ -59,11 +59,19 @@
                 android:onClick="@{() -> viewmodel.setSelection(Selection.USERLIST)}"
                 android:text="Your List" />
 
+            <ProgressBar
+                android:id="@+id/search_movie_fragment_progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:visibility="@{viewmodel.loadingProgressBar}"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_movie_fragment_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
 
     </LinearLayout>
 </layout>

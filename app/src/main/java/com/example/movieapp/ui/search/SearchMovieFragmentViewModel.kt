@@ -14,6 +14,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
     val signedIn: MutableLiveData<Int> = MutableLiveData()
+    val loadingProgressBar: MutableLiveData<Int> = MutableLiveData()
     lateinit var recyclerView: RecyclerView
     lateinit var itemTouchHelper: ItemTouchHelper
 
@@ -52,6 +53,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     fun setSelection(selection: Selection) {
         itemTouchHelper.attachToRecyclerView(null)
+        loadingProgressBar.postValue(View.VISIBLE)
         when(selection){
             Selection.TRENDINGLIST -> addTrendingList()
             Selection.SEARCHLIST -> addSearchList()
@@ -64,6 +66,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
         finalList.removeSource(Repository.getTrendingMovies())
         finalList.addSource(Repository.getTrendingMovies()) { movieList ->
             finalList.value = movieList
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 
@@ -72,6 +75,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
             finalList.removeSource(Repository.getMovieList(searchString))
             finalList.addSource(Repository.getMovieList(searchString)) { movieList ->
                 finalList.value = movieList
+                loadingProgressBar.postValue(View.GONE)
             }
         }
     }
@@ -80,6 +84,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
         finalList.removeSource(Repository.getPopularMovies())
         finalList.addSource(Repository.getPopularMovies()) { movieList ->
             finalList.value = movieList
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 
@@ -89,6 +94,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
             finalList.value = movieList
             itemTouchHelper.attachToRecyclerView(recyclerView)
             finalList.removeSource(FireBaseFetcher.getUserMovies())
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 

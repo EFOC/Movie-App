@@ -36,6 +36,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.search_movie_fragment, container, false)
         searchMovieFragmentViewModel = ViewModelProvider(this).get(SearchMovieFragmentViewModel::class.java)
+        searchMovieFragmentViewModel.loadingProgressBar.postValue(View.VISIBLE)
         binding.lifecycleOwner = this
         binding.viewmodel = searchMovieFragmentViewModel
 
@@ -61,6 +62,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
             adapter.submitList(movieList)
             binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
+            searchMovieFragmentViewModel.loadingProgressBar.postValue(View.GONE)
         })
     }
 
