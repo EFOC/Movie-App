@@ -72,8 +72,8 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             ): Boolean = false
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 searchMovieFragmentViewModel.removeMovieFromDatabase(adapter.getItemAt(viewHolder.adapterPosition).id)
-                //TODO: Fix the UserList section
                 searchMovieFragmentViewModel.setSelection(USERLIST)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }).attachToRecyclerView(movieRecyclerView)
     }
