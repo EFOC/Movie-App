@@ -52,9 +52,10 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
+        searchMovieFragmentViewModel.recyclerView = movieRecyclerView
+        searchMovieFragmentViewModel.itemTouchHelper = setUpItemTouch()
         adapter = MovieListAdapter(searchMovieFragmentViewModel)
         adapter.setCallback(this)
-        setItemTouch()
         binding.searchMovieFragmentRecyclerView.adapter = adapter
         searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
@@ -63,8 +64,8 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         })
     }
 
-    private fun setItemTouch() {
-        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    private fun setUpItemTouch(): ItemTouchHelper {
+        return ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -75,7 +76,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
                 searchMovieFragmentViewModel.setSelection(USERLIST)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
-        }).attachToRecyclerView(movieRecyclerView)
+        })
     }
 
     override fun displayMovieDetailsButton(movieId: String) {
