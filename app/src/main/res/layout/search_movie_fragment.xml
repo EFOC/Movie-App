@@ -40,25 +40,23 @@
                 android:layout_height="wrap_content"
                 android:text="Trending"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.TRENDINGLIST)}"/>
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Popular"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.POPULARLIST)}"/>
             <Button
-                android:id="@+id/sign_out_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.signedIn}"
-                android:text="Sign Out" />
-            <Button
                 android:id="@+id/account_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.USERLIST)}"
                 android:text="Your List" />
-
+            <Button
+                android:id="@+id/sign_out_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewmodel.signedIn}"
+                android:text="Sign Out" />
             <ProgressBar
                 android:id="@+id/search_movie_fragment_progress_bar"
                 style="?android:attr/progressBarStyle"
