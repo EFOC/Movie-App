@@ -29,7 +29,6 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
     private lateinit var searchMovieFragmentViewModel: SearchMovieFragmentViewModel
     private lateinit var binding: SearchMovieFragmentBinding
-    private lateinit var movieRecyclerView: RecyclerView
     private lateinit var adapter: MovieListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +49,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
     }
 
     private fun setUpRecyclerView(context: Context) {
-        movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
+        val movieRecyclerView = binding.searchMovieFragmentRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
         searchMovieFragmentViewModel.recyclerView = movieRecyclerView
