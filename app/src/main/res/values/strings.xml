@@ -11,4 +11,20 @@
     <string name="search_movie_fragment_your_list_button">Your List</string>
     <string name="search_movie_fragment_sign_out_button">Sign Out</string>
 
+    // Movie Search Item
+    <string name="movie_search_save_movie_button">Save Movie</string>
+
+    // Main Fragment
+    <string name="main_fragment_login_button">Login</string>
+
+    // Code requests
+    <string name="movie_string">movie</string>
+    <string name="results_string">results</string>
+
+    //Database strings
+    <string name="users_string">users</string>
+    <string name="saved_movies_string">saved_movies</string>
+    <string name="movie_name_string">movie_name</string>
+    <string name="movie_poster_url_string">movie_poster_url</string>
+
 </resources>

@@ -60,7 +60,7 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="16dp"
             android:onClick="@{() -> fragmentViewModel.saveMovieToDatabase(movie.id, movie.title, movie.posterImage)}"
-            android:text="Save Movie"
+            android:text="@string/movie_search_save_movie_button"
             android:visibility="@{fragmentViewModel.signedIn}"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
             app:layout_constraintTop_toTopOf="parent" />
