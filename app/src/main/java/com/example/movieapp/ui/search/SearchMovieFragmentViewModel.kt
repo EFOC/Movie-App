@@ -12,7 +12,6 @@ class SearchMovieFragmentViewModel : ViewModel() {
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
     val signedIn: MutableLiveData<Int> = MutableLiveData()
-    val removeMovie: MutableLiveData<Boolean> = MutableLiveData()
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
@@ -72,9 +71,11 @@ class SearchMovieFragmentViewModel : ViewModel() {
     }
 
     private fun addSearchList() {
-        finalList.removeSource(Repository.getMovieList(editTextContent.value.toString()))
-        finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) { movieList ->
-            finalList.value = movieList
+        editTextContent.value?.let { searchString ->
+            finalList.removeSource(Repository.getMovieList(searchString))
+            finalList.addSource(Repository.getMovieList(searchString)) { movieList ->
+                finalList.value = movieList
+            }
         }
     }
 
