@@ -22,7 +22,7 @@
             android:id="@+id/search_movie_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Movie Name"
+            android:hint="@string/search_movie_fragment_movie_name"
             android:inputType="text"
             android:text="@={viewmodel.editTextContent}" />
 
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewmodel.setSelection(Selection.SEARCHLIST)}"
-            android:text="Search" />
+            android:text="@string/search_movie_fragment_search_button" />
 
         <LinearLayout
             android:id="@+id/search_movie_fragment_button_container"
@@ -43,27 +43,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.TRENDINGLIST)}"
-                android:text="Trending" />
+                android:text="@string/search_movie_fragment_trending_button" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.POPULARLIST)}"
-                android:text="Popular" />
+                android:text="@string/search_movie_fragment_popular_button" />
 
             <Button
                 android:id="@+id/account_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.USERLIST)}"
-                android:text="Your List"
+                android:text="@string/search_movie_fragment_your_list_button"
                 android:visibility="@{viewmodel.signedIn}" />
 
             <Button
                 android:id="@+id/sign_out_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign Out"
+                android:text="@string/search_movie_fragment_sign_out_button"
                 android:visibility="@{viewmodel.signedIn}" />
 
             <ProgressBar
@@ -79,7 +79,6 @@
             android:id="@+id/search_movie_fragment_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
 
     </LinearLayout>
 </layout>
