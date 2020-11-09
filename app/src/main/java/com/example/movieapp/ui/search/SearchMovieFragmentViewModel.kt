@@ -66,30 +66,30 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     private fun addTrendingList() {
         finalList.removeSource(Repository.getTrendingMovies())
-        finalList.addSource(Repository.getTrendingMovies()) {
-            finalList.value = it
+        finalList.addSource(Repository.getTrendingMovies()) { movieList ->
+            finalList.value = movieList
         }
     }
 
     private fun addSearchList() {
         finalList.removeSource(Repository.getMovieList(editTextContent.value.toString()))
-        finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) {
-            finalList.value = it
+        finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) { movieList ->
+            finalList.value = movieList
         }
     }
 
     private fun addPopularList() {
         finalList.removeSource(Repository.getPopularMovies())
-        finalList.addSource(Repository.getPopularMovies()) {
-            finalList.value = it
+        finalList.addSource(Repository.getPopularMovies()) { movieList ->
+            finalList.value = movieList
         }
     }
 
     private fun addUsersList() {
         finalList.removeSource(FireBaseFetcher.getUserMovies())
-        finalList.addSource(FireBaseFetcher.getUserMovies()) {
-            finalList.value = it
+        finalList.addSource(FireBaseFetcher.getUserMovies()) { movieList ->
+            finalList.value = movieList
+            finalList.removeSource(FireBaseFetcher.getUserMovies())
         }
-        finalList.removeSource(FireBaseFetcher.getUserMovies())
     }
 }
