@@ -64,16 +64,5 @@
             android:visibility="@{fragmentViewModel.signedIn}"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/remove_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="68dp"
-            android:layout_marginTop="16dp"
-            android:text="Remove Movie"
-            android:onClick="@{() -> fragmentViewModel.removeMovieFromDatabase(movie.id)}"
-            app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
-            app:layout_constraintTop_toBottomOf="@+id/search_movie_item_save_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
