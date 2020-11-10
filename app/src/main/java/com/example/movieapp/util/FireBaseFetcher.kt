@@ -1,5 +1,7 @@
 package com.example.movieapp.util
 
+import android.app.Application
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,11 +29,9 @@ object FireBaseFetcher {
     }
 
     fun getUserMovies(): LiveData<List<Movie>> {
-        Log.d("TEST", "Getting user movies")
-
         myRef.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("TEST", "Error: ${databaseError.code}")
             }
 
             override fun onDataChange(ds: DataSnapshot) {
