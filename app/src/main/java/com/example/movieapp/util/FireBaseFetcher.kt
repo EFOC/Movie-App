@@ -15,20 +15,24 @@ object FireBaseFetcher {
     fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String, moviePlot: String, releaseYear: String) {
         Log.d("TEST", "Saving movie to database")
         val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").setValue(movieImageUrl)
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_plot").setValue(moviePlot)
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("release_year").setValue(releaseYear)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).apply {
+            child("movie_name").setValue(movieName)
+            child("movie_poster_url").setValue(movieImageUrl)
+            child("movie_plot").setValue(moviePlot)
+            child("release_year").setValue(releaseYear)
+        }
 
     }
 
     fun removeMovieFromDatabase(movieId: String) {
         Log.d("TEST", "Removing movie from database")
         val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").removeValue()
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").removeValue()
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_plot").removeValue()
-        myRef.child("users").child(user).child("saved_movies").child(movieId).child("release_year").removeValue()
+        myRef.child("users").child(user).child("saved_movies").child(movieId).apply {
+            child("movie_name").removeValue()
+            child("movie_poster_url").removeValue()
+            child("movie_plot").removeValue()
+            child("release_year").removeValue()
+        }
     }
 
     fun getUserMovies(): LiveData<List<Movie>> {
