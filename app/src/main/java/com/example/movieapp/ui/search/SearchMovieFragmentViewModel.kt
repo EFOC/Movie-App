@@ -26,8 +26,8 @@ class SearchMovieFragmentViewModel : ViewModel() {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
-    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String) {
-        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl)
+    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String, moviePlot: String, releaseYear: String) {
+        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl, moviePlot, releaseYear)
     }
 
     fun removeMovieFromDatabase(movieId: String) {

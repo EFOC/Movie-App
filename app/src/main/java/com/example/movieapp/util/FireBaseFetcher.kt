@@ -14,11 +14,14 @@ object FireBaseFetcher {
     private val myRef: DatabaseReference = firebaseDatabase.reference
     val liveDataMovies: MutableLiveData<ArrayList<Movie>> = MutableLiveData()
 
-    fun saveMovieToDatabase(movieId: String, movieName : String,movieImageUrl: String) {
+    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String, moviePlot: String, releaseYear: String) {
         Log.d("TEST", "Saving movie to database")
         val user = FirebaseAuth.getInstance().currentUser!!.uid
         myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").setValue(movieName)
         myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").setValue(movieImageUrl)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_plot").setValue(moviePlot)
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("release_year").setValue(releaseYear)
+
     }
 
     fun removeMovieFromDatabase(movieId: String) {
@@ -26,6 +29,8 @@ object FireBaseFetcher {
         val user = FirebaseAuth.getInstance().currentUser!!.uid
         myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_name").removeValue()
         myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_poster_url").removeValue()
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("movie_plot").removeValue()
+        myRef.child("users").child(user).child("saved_movies").child(movieId).child("release_year").removeValue()
     }
 
     fun getUserMovies(): LiveData<List<Movie>> {
@@ -40,7 +45,7 @@ object FireBaseFetcher {
                 val arrayList: ArrayList<Movie> = ArrayList()
                 for (dataSnapshot in ds.children) {
                     dataSnapshot.child(user).child("saved_movies").children.forEach {
-                        arrayList.add(Movie(it.child("movie_name").value.toString(), "test", " test", it.key.toString(), it.child("movie_poster_url").value.toString()))
+                        arrayList.add(Movie(it.child("movie_name").value.toString(), it.child("movie_plot").value.toString(), it.child("release_year").value.toString(), it.key.toString(), it.child("movie_poster_url").value.toString()))
                     }
                 }
                 liveDataMovies.value = arrayList
