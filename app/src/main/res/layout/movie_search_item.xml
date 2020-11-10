@@ -35,11 +35,13 @@
 
         <TextView
             android:id="@+id/search_movie_item_title"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
             android:text="@{movie.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.114"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
             app:layout_constraintTop_toTopOf="@+id/search_movie_item_poster" />
 
@@ -48,20 +50,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="@{movie.year}"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{@string/movie_search_release_year_text_view(movie.year)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/search_movie_item_save_button"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
-            app:layout_constraintTop_toBottomOf="@+id/search_movie_item_title" />
+            app:layout_constraintTop_toBottomOf="@+id/search_movie_item_title"
+            app:layout_constraintVertical_bias="0.529" />
 
         <Button
             android:id="@+id/search_movie_item_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="8dp"
             android:onClick="@{() -> fragmentViewModel.saveMovieToDatabase(movie.id, movie.title, movie.posterImage, movie.plot, movie.year)}"
             android:text="@string/movie_search_save_movie_button"
             android:visibility="@{fragmentViewModel.signedIn}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.843"
             app:layout_constraintStart_toEndOf="@+id/search_movie_item_poster"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
