@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.example.movieapp.ui.search.SearchMovieFragmentViewModel" />
+
         <import type="com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection" />
     </data>
 
@@ -20,46 +22,59 @@
             android:id="@+id/search_movie_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.editTextContent}"
+            android:hint="@string/search_movie_fragment_movie_name"
             android:inputType="text"
-            android:hint="Movie Name" />
+            android:text="@={viewmodel.editTextContent}" />
 
         <Button
             android:id="@+id/search_fragment_search_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:onClick="@{() -> viewmodel.setSelection(Selection.SEARCHLIST)}"/>
+            android:onClick="@{() -> viewmodel.setSelection(Selection.SEARCHLIST)}"
+            android:text="@string/search_movie_fragment_search_button" />
+
         <LinearLayout
             android:id="@+id/search_movie_fragment_button_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trending"
-                android:onClick="@{() -> viewmodel.setSelection(Selection.TRENDINGLIST)}"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular"
-                android:onClick="@{() -> viewmodel.setSelection(Selection.POPULARLIST)}"/>
+                android:onClick="@{() -> viewmodel.setSelection(Selection.TRENDINGLIST)}"
+                android:text="@string/search_movie_fragment_trending_button" />
+
             <Button
-                android:id="@+id/sign_out_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.signedIn}"
-                android:text="Sign Out" />
+                android:onClick="@{() -> viewmodel.setSelection(Selection.POPULARLIST)}"
+                android:text="@string/search_movie_fragment_popular_button" />
+
             <Button
                 android:id="@+id/account_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewmodel.setSelection(Selection.USERLIST)}"
-                android:text="Your List" />
+                android:text="@string/search_movie_fragment_your_list_button"
+                android:visibility="@{viewmodel.signedIn}" />
+
+            <Button
+                android:id="@+id/sign_out_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_movie_fragment_sign_out_button"
+                android:visibility="@{viewmodel.signedIn}" />
+
+            <ProgressBar
+                android:id="@+id/search_movie_fragment_progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="@{viewmodel.loadingProgressBar}" />
 
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_movie_fragment_recycler_view"
             android:layout_width="match_parent"

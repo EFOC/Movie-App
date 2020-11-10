@@ -2,6 +2,8 @@ package com.example.movieapp.ui.search
 
 import android.view.View
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
 import com.example.movieapp.util.FireBaseFetcher
@@ -11,7 +13,10 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     val editTextContent = MutableLiveData<String>()
     val finalList = MediatorLiveData<List<Movie>>()
-    var signedIn: MutableLiveData<Int> = MutableLiveData()
+    val signedIn: MutableLiveData<Int> = MutableLiveData()
+    val loadingProgressBar: MutableLiveData<Int> = MutableLiveData()
+    lateinit var recyclerView: RecyclerView
+    lateinit var itemTouchHelper: ItemTouchHelper
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
@@ -21,8 +26,12 @@ class SearchMovieFragmentViewModel : ViewModel() {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
-    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String) {
-        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl)
+    fun saveMovieToDatabase(movieId: String, movieName : String, movieImageUrl: String, moviePlot: String, releaseYear: String) {
+        FireBaseFetcher.saveMovieToDatabase(movieId, movieName, movieImageUrl, moviePlot, releaseYear)
+    }
+
+    fun removeMovieFromDatabase(movieId: String) {
+        FireBaseFetcher.removeMovieFromDatabase(movieId)
     }
 
     fun checkUserState(state: AuthenticationState) {
@@ -30,14 +39,6 @@ class SearchMovieFragmentViewModel : ViewModel() {
             AuthenticationState.AUTHENTICATED -> userPage()
             AuthenticationState.UNAUTHENTICATED -> anonymizePage()
         }
-    }
-
-    private fun anonymizePage() {
-        signedIn.postValue(View.GONE)
-    }
-
-    private fun userPage() {
-        signedIn.postValue(View.VISIBLE)
     }
 
     var authenticationState = Transformations.map(FirebaseUserLiveData()) { user ->
@@ -51,6 +52,8 @@ class SearchMovieFragmentViewModel : ViewModel() {
     fun getMovieDetail(movieId: String): MutableLiveData<Movie> = Repository.getMovieDetail(movieId)
 
     fun setSelection(selection: Selection) {
+        itemTouchHelper.attachToRecyclerView(null)
+        loadingProgressBar.postValue(View.VISIBLE)
         when(selection){
             Selection.TRENDINGLIST -> addTrendingList()
             Selection.SEARCHLIST -> addSearchList()
@@ -61,29 +64,45 @@ class SearchMovieFragmentViewModel : ViewModel() {
 
     private fun addTrendingList() {
         finalList.removeSource(Repository.getTrendingMovies())
-        finalList.addSource(Repository.getTrendingMovies()) {
-            finalList.value = it
+        finalList.addSource(Repository.getTrendingMovies()) { movieList ->
+            finalList.value = movieList
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 
     private fun addSearchList() {
-        finalList.removeSource(Repository.getMovieList(editTextContent.value.toString()))
-        finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) {
-            finalList.value = it
+        editTextContent.value?.let { searchString ->
+            finalList.removeSource(Repository.getMovieList(searchString))
+            finalList.addSource(Repository.getMovieList(searchString)) { movieList ->
+                finalList.value = movieList
+                loadingProgressBar.postValue(View.GONE)
+            }
         }
     }
 
     private fun addPopularList() {
         finalList.removeSource(Repository.getPopularMovies())
-        finalList.addSource(Repository.getPopularMovies()) {
-            finalList.value = it
+        finalList.addSource(Repository.getPopularMovies()) { movieList ->
+            finalList.value = movieList
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 
     private fun addUsersList() {
         finalList.removeSource(FireBaseFetcher.getUserMovies())
-        finalList.addSource(FireBaseFetcher.getUserMovies()) {
-            finalList.value = it
+        finalList.addSource(FireBaseFetcher.getUserMovies()) { movieList ->
+            finalList.value = movieList
+            itemTouchHelper.attachToRecyclerView(recyclerView)
+            finalList.removeSource(FireBaseFetcher.getUserMovies())
+            loadingProgressBar.postValue(View.GONE)
         }
+    }
+
+    private fun anonymizePage() {
+        signedIn.postValue(View.GONE)
+    }
+
+    private fun userPage() {
+        signedIn.postValue(View.VISIBLE)
     }
 }

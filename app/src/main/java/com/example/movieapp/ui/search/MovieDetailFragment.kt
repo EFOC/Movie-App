@@ -26,7 +26,7 @@ class MovieDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        movie = requireArguments().getParcelable("movie")!!
+        movie = requireArguments().getParcelable(resources.getString(R.string.movie_string))!!
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
         Log.d("TEST", "movie in detail ${movie.title}")
         binding.movie = movie

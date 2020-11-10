@@ -2,4 +2,29 @@
     <string name="app_name">Movie App</string>
     <string name="movie_poster_base_url">http://image.tmdb.org/t/p/</string>
     <string name="movie_poster_w400">http://image.tmdb.org/t/p/w400%s</string>
+
+    // Search Movie Fragment
+    <string name="search_movie_fragment_movie_name">Movie Name</string>
+    <string name="search_movie_fragment_search_button">Search</string>
+    <string name="search_movie_fragment_trending_button">Trending</string>
+    <string name="search_movie_fragment_popular_button">Popular</string>
+    <string name="search_movie_fragment_your_list_button">Your List</string>
+    <string name="search_movie_fragment_sign_out_button">Sign Out</string>
+
+    // Movie Search Item
+    <string name="movie_search_save_movie_button">Save Movie</string>
+
+    // Main Fragment
+    <string name="main_fragment_login_button">Login</string>
+
+    // Code requests
+    <string name="movie_string">movie</string>
+    <string name="results_string">results</string>
+
+    //Database strings
+    <string name="users_string">users</string>
+    <string name="saved_movies_string">saved_movies</string>
+    <string name="movie_name_string">movie_name</string>
+    <string name="movie_poster_url_string">movie_poster_url</string>
+
 </resources>
