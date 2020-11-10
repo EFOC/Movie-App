@@ -13,6 +13,7 @@
 
     // Movie Search Item
     <string name="movie_search_save_movie_button">Save Movie</string>
+    <string name="movie_search_release_year_text_view">Released on\n %s</string>
 
     // Main Fragment
     <string name="main_fragment_login_button">Login</string>
