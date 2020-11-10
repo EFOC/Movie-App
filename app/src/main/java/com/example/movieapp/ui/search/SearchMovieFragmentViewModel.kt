@@ -71,12 +71,14 @@ class SearchMovieFragmentViewModel : ViewModel() {
     }
 
     private fun addSearchList() {
-        editTextContent.value?.let { searchString ->
-            finalList.removeSource(Repository.getMovieList(searchString))
-            finalList.addSource(Repository.getMovieList(searchString)) { movieList ->
+        if (editTextContent.value != null) {
+            finalList.removeSource(Repository.getMovieList(editTextContent.value.toString()))
+            finalList.addSource(Repository.getMovieList(editTextContent.value.toString())) { movieList ->
                 finalList.value = movieList
                 loadingProgressBar.postValue(View.GONE)
             }
+        } else {
+            loadingProgressBar.postValue(View.GONE)
         }
     }
 
