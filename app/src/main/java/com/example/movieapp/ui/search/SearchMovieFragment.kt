@@ -19,7 +19,6 @@ import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.databinding.SearchMovieFragmentBinding
 import com.example.movieapp.ui.search.SearchMovieFragmentViewModel.Selection.*
 import com.firebase.ui.auth.AuthUI
-import java.util.*
 
 class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
 
@@ -39,7 +38,11 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         binding.lifecycleOwner = this
         binding.viewmodel = searchMovieFragmentViewModel
 
-        binding.signOutButton.setOnClickListener { AuthUI.getInstance().signOut(requireContext()) }
+        binding.signOutButton.setOnClickListener {
+            AuthUI.getInstance().signOut(requireContext())
+            searchMovieFragmentViewModel.finalList.postValue(null)
+            searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
+        }
 
         searchMovieFragmentViewModel.authenticationState.observe(viewLifecycleOwner, Observer { state ->
             searchMovieFragmentViewModel.checkUserState(state)
@@ -60,7 +63,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
             adapter.submitList(movieList)
-            binding.searchMovieFragmentRecyclerView.scrollToPosition(0)
+            movieRecyclerView.smoothScrollToPosition(0)
             searchMovieFragmentViewModel.loadingProgressBar.postValue(View.GONE)
         })
     }
