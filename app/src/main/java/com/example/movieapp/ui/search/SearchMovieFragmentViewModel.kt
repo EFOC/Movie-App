@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.Repository
 import com.example.movieapp.util.FireBaseFetcher
@@ -17,6 +18,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
     val loadingProgressBar: MutableLiveData<Int> = MutableLiveData()
     lateinit var recyclerView: RecyclerView
     lateinit var itemTouchHelper: ItemTouchHelper
+    lateinit var adapter: MovieListAdapter
 
     enum class Selection {
         TRENDINGLIST, SEARCHLIST, POPULARLIST, USERLIST
@@ -97,6 +99,7 @@ class SearchMovieFragmentViewModel : ViewModel() {
             itemTouchHelper.attachToRecyclerView(recyclerView)
             finalList.removeSource(FireBaseFetcher.getUserMovies())
             loadingProgressBar.postValue(View.GONE)
+            adapter.notifyDataSetChanged()
         }
     }
 

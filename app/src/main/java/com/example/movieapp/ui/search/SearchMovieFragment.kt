@@ -60,6 +60,7 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
         adapter = MovieListAdapter(searchMovieFragmentViewModel)
         adapter.setCallback(this)
         binding.searchMovieFragmentRecyclerView.adapter = adapter
+        searchMovieFragmentViewModel.adapter = adapter
         searchMovieFragmentViewModel.setSelection(TRENDINGLIST)
         searchMovieFragmentViewModel.finalList.observe(viewLifecycleOwner, Observer {movieList ->
             adapter.submitList(movieList)
@@ -77,8 +78,6 @@ class SearchMovieFragment : Fragment(), MovieSearchItemViewModel {
             ): Boolean = false
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 searchMovieFragmentViewModel.removeMovieFromDatabase(adapter.getItemAt(viewHolder.adapterPosition).id)
-                searchMovieFragmentViewModel.setSelection(USERLIST)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         })
     }
