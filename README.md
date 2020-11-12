@@ -11,7 +11,7 @@ Some of the
 * Firebase Authentication let User log-in using their phone number, email, or Gmail
 
 ### Log-On
-User is able to log on the app using 3 methods, phone number, Gmail, or personal email.(Example uses auto log-in)
+User is able to log on the app using 3 methods, phone number, Gmail, or personal email. (Example uses auto log-in)
 Once the User is authenticated, they will have the extra options to sign-out, save a movie, and view the movies saved in the "Your List" section
 
 ![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/log_on1.gif)
