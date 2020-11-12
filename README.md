@@ -14,7 +14,7 @@ Some of the
 User is able to log on the app using 3 methods, phone number, Gmail, or personal email.(Example uses auto log-in)
 Once the User is authenticated, they will have the extra options to sign-out, save a movie, and view the movies saved in the "Your List" section
 
-![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/log_on.gif)
+![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/log_on1.gif)
 
 ### Log-Off
 When the User logs-off, the app shows the anonymous version where saving movies and viewing your list is disabled
@@ -24,7 +24,7 @@ When the User logs-off, the app shows the anonymous version where saving movies 
 ### Saving Movie
 The User can save a movie by tapping the save button beside the movie, the info will be stored in the database to retrieve when they want to see it
 
-![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/saving_movie.gif)
+![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/saving_movie1.gif)
 
 ### Searching Movie
 Type in a string in the search bar and click the search button to get a list of related movies
