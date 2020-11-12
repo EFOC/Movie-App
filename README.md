@@ -7,11 +7,5 @@ and be able to save their favorite movies for future reference.
 
 This app currently uses:
 
-* Kotlin
-* Navigation Component
-* Single Activity - Multiple Fragments Archecture 
-* MVVM
-* Repository Pattern
-* Reftrofit2 Framework
-
-Will implement a Log-In system with FireBase and ROOM to save the user's favorite movies.
+## Deleting Movies
+![](https://github.com/EFOC/Movie-App/blob/master/app/libs/gifs/deleting_movie.gif)
