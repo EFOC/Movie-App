@@ -2,13 +2,17 @@
 
 Created a Movie App for users to search movies and save their favorite movies to their profiles.
 
-Some of the 
+Some of the features include:
 
 * 100% Kotlin
 * One activity, multiple fragments for the screens
 * Jetpack library
 * Firebase Database to save User's info
 * Firebase Authentication let User log-in using their phone number, email, or Gmail
+* Reftrofit2 framework
+* Swipe to delete
+* LiveData
+* RecyclerView for the movie list
 
 ### Log-On
 User is able to log on the app using 3 methods, phone number, Gmail, or personal email. (Example uses auto log-in)
