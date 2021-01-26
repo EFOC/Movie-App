@@ -5,6 +5,7 @@ Created a Movie App for users to search movies and save their favorite movies to
 Some of the features include:
 
 * 100% Kotlin
+* MVVM
 * One activity, multiple fragments for the screens
 * Jetpack library
 * Firebase Database to save User's info
